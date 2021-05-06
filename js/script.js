@@ -5,14 +5,31 @@
 // Se il numero è presente nella lista dei numeri generati, la partita termina, altrimenti si continua chiedendo all'utente un altro numero.
 // La partita termina quando il giocatore inserisce un numero "vietato" o raggiunge il numero massimo possibile di numeri consentiti.
 // Al termine della partita il software deve comunicare il punteggio, cioè il numero di volte che l'utente ha inserito un numero consentito.
+// ----------------------------------------------
 
 var bombs = [];
 var attempts = [];
-var maxAttempts = 84;
+var maxAttempts;
+var maxNumber;
+
+var level = parseInt(prompt("choose difficulty:\n2 - Hard\n1 - Medium\n0 - Easy"));
+
+switch (difficulty) {
+    case 2:
+        maxNumber = 50;
+        break;
+    case 1:
+        maxNumber = 80;
+        break;
+    default:
+        maxNumber = 100;
+        break;
+}
+maxAttempts = maxNumber - 16;
 
 // generating 16 casual numbers between 1 and 100 (BOMBS)
 while (bombs.length < 16) {
-    var randomNumber = getRandomNumber(1, 100);
+    var randomNumber = getRandomNumber(1, maxNumber);
 
     // condition to verify and esclude duplicate elements in the array
     if (!isInArray(randomNumber, bombs)) {
@@ -30,8 +47,8 @@ while (attempts.length < maxAttempts && gameOver == false) {
     // adding player's numbers escluding strings, 0, and >100 inputs
     var playerNumber;
     do {
-        playerNumber = parseInt(prompt("Enter a number between 1 and 100"));
-    } while (isNaN(playerNumber) || playerNumber < 1 || playerNumber > 100) 
+        playerNumber = parseInt(prompt("Enter a number between 1 and" + maxNumber));
+    } while (isNaN(playerNumber) || playerNumber < 1 || playerNumber > maxNumber) 
 
     // condition to lose: gameOver turns true when playerNumber is in the array "bombs"
     if (isInArray(playerNumber, bombs)) {
@@ -48,10 +65,8 @@ attempts.length;
 if (attempts.length == maxAttempts) {
     alert("U WON!\nYour score: " + attempts.length)
 }
-console.log("tentativi", attempts);
+console.log("attempts", attempts);
 // /GAME
-
-
 
 
 
